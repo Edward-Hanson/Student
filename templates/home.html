@@ -1,0 +1,258 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.dashboard_wrapper {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    gap: 1rem;
+}
+
+.sidebar {
+    width:250px;
+    height: 100vh;
+    background-color: #00DFC0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding:2rem;
+}
+
+.sidebarContent {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sidebarContent {
+    width: 100px;
+    height: 100px;
+    border-radius:9px;
+    background: linear-gradient(to bottom, #40E9CB, #94D9F7);
+    padding: .5rem;
+    cursor: pointer;
+}
+
+.sidebarContent img {
+    width: 100%;
+}
+
+.sidebarNavigation ul{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.sidebarNavigation ul li {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: .4rem;
+    transition: all .5s;
+    padding: .5rem;
+    color: white;
+    font-weight: 500;
+    width: 100%;
+}
+
+.sidebarNavigation ul li:hover {
+    background-color: white;
+    width: 100%;
+    border-radius: 8px;
+    color: #00DFC0;
+}
+
+.sidebarNavigation ul li a {
+    text-decoration: none;
+    color: inherit;
+}
+.dashboard-content {
+    padding: 1.5rem;
+    position: relative;
+    width: 100%;
+}
+
+.profileContainer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: .5rem;
+    width: 100%;
+    position: relative;
+}
+
+.profileImage {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #00DFC0;
+    cursor: pointer;
+}
+
+.profileImage img {
+    width: 100%;
+}
+
+.dashboardHeading {
+    width: 100%;
+    background-color: #00DFC0;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    margin-block: 1rem;
+}
+
+.dashboardSummary {
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+}
+
+.financialCard {
+    width: 200px;
+    height: 200px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    flex-direction: column;
+    margin-block-start: 2rem;
+    border: 2px solid #00DFC0;
+}
+
+.dashboardHeadingTop {
+    display:flex;
+    flex-direction:column;
+    padding:1rem;
+    color:white;
+}
+
+.dashboardHeadingTop h4 {
+    margin-block-end:7rem;
+    font-size:.8rem;
+    font-weight:400;
+}
+
+.dashboardHeadingTop h5 {
+    font-size:1.5rem;
+}
+
+.dashboardHeadingTop span {
+    font-weight:500;
+}
+</style>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="main.js" defer></script>
+    <title>DashBoard</title>
+</head>
+<body>
+    <div class="dashboard_wrapper">
+        <div class="sidebar">
+            <div class="sidebarContent">
+                <img src="{% static 'images/img2.png'%}" alt="">
+            </div>
+            <div class="sidebarNavigation">
+                <ul>
+                    <li>
+                        <img src="{% static 'images/dashboard.jpg'%}" alt="">
+                        <a href="#">DashBoard</a>
+                    </li>
+                    <li>
+                        <img src="{% static 'images/dashboard.jpg'%}" alt="">
+                        <a href="{% url 'interests' %}">Book Room</a>
+                    </li>
+                    <li>
+                        <img src="{% static 'images/dashboard.jpg'%}" alt="">
+                        <a href="#">View Room</a>
+                    </li>
+                    <li>
+                        <img src="{% static 'images/dashboard.jpg'%}" alt="">
+                        <a href="#">Payment</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="logout">
+                <button><a href="{% url "logout"%}">Login Out</a></button>
+            </div>
+        </div>
+        <div class="dashboard-content">
+            <div class="profileContainer">
+                <div class="profileImage">
+                    <img src="assets/profile2.jpg" alt="">
+                </div>
+                <div class="profileInfo">
+                    <span>{{user.student_name}}</span>
+                </div>
+            </div>
+            <div class="dashboardEvent">
+                <div class="dashboardHeading">
+                    <div class="dashboardHeadingTop">
+                        {% now "Y-m-d" as current_date %}
+                        <h4>{{ current_date }}</h4>
+                        <h5>Welcome back, {{user.student_name}}</h5>
+                        <span>Always stay updated i your student portal</span>
+                    </div>
+                    <div class="dashboardHeadingImage">
+                        <img src="{% static 'images/logo.png'%}" alt="">
+                    </div>
+                </div>
+                <div class="dashboardSummary">
+                    <div class="financialCard">
+                        <h4>School Fees</h4>
+                        <div class="financialCardImage">
+                            <img src="{% static 'images/financial.jpg'%}" alt="">
+                        </div>
+                        <h4>$90,000</h4>
+                        <span>Total Payment</span>
+                    </div>
+                    <div class="financialCard">
+                        <h4>Hostel Fee</h4>
+                        <div class="financialCardImage">
+                            <img src="{% static 'images/financial.jpg'%}"  alt="">
+                        </div>
+                        <h4>$5,000</h4>
+                        <span>Total Payment</span>
+                    </div>
+                    <div class="financialCard">
+                        <h4>Department Dues</h4>
+                        <div class="financialCardImage">
+                            <img src="{% static 'images/financial.jpg'%}" alt="">
+                        </div>
+                        <h4>$100</h4>
+                        <span>Total Payment</span>
+                    </div>
+                    <div class="financialCard">
+                        <h4>Scholarship Grant</h4>
+                        <div class="financialCardImage">
+                            <img src="{% static 'images/financial.jpg'%}" alt="">
+                        </div>
+                        <h4>$100,000</h4>
+                        <span>Total Payment</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+
+</body>
+</html>

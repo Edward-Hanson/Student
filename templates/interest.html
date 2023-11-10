@@ -1,0 +1,286 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.dashboard_wrapper {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+
+.sidebar {
+    width:250px;
+    height: 100vh;
+    background-color: #00DFC0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sidebarContent {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sidebarContent {
+    width: 100px;
+    height: 100px;
+    border-radius:9px;
+    background: linear-gradient(to bottom, #40E9CB, #94D9F7);
+    padding: .5rem;
+    cursor: pointer;
+}
+
+.sidebarContent img {
+    width: 100%;
+}
+
+.sidebarNavigation ul{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.sidebarNavigation ul li {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: .4rem;
+    transition: all .5s;
+    padding: .5rem;
+    color: white;
+    font-weight: 500;
+    width: 100%;
+}
+
+.sidebarNavigation ul li:hover {
+    background-color: white;
+    width: 100%;
+    border-radius: 8px;
+    color: #00DFC0;
+}
+
+.sidebarNavigation ul li a {
+    text-decoration: none;
+    color: inherit;
+}
+.dashboard-content {
+    padding: 1.5rem;
+    position: relative;
+    width: 100%;
+}
+
+.interestContainer {
+    padding: 2rem;
+}
+
+.interest {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.interestContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    display: flex;
+}
+
+.interestContainer div {
+    border: 1px solid #00DFC0;
+    padding: 1rem 1.5rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    
+}
+
+.btn {
+    border: 1px solid #00DFC0;
+    padding: 1rem 1.5rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-block-start: 5rem;
+
+}
+
+
+
+.selected{
+    background-color: #00DFC0;
+    color: white;
+}
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="book.css">
+    <title>Book Room</title>
+</head>
+<body>
+    <form method="POST" action="{% url 'pairs' %}">
+        {% csrf_token %}
+        <div class="dashboard_wrapper">
+            <div class="sidebar">
+            <div class="sidebarContent">
+                <img src="assets/img1.png" alt="">
+            </div>
+            <div class="sidebarNavigation">
+                <ul>
+                    <li>
+                        <img src="assets/dashboard.png" alt="">
+                        <a href="dashboard.html">DashBoard</a>
+                    </li>
+                    <li>
+                        <img src="assets/dashboard.png" alt="">
+                        <a href="book.html">Book Room</a>
+                    </li>
+                    <li>
+                        <img src="assets/dashboard.png" alt="">
+                        <a href="#">View Room</a>
+                    </li>
+                    <li>
+                        <img src="assets/dashboard.png" alt="">
+                        <a href="#">Payment</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="logout">
+                <button>Login Out</button>
+            </div>
+        </div>
+
+        <div class="interest">
+            <h1>Select Your Interests and Personality</h1>
+            <div class="interestContainer"></div>
+            <button class="btn" disabled onclick="showCongratulations()">Book Room</button>
+        </div>
+    </div>
+</form>
+
+<script>
+        
+const interestContainer = document.querySelector(".interestContainer");
+const congratBtn = document.querySelector('.btn')
+
+    const interests = [
+      "Spa",
+      "Gaming",
+      "Workout",
+      "Movie",
+      "Introvert",
+      "Shopping",
+      "Sport",
+      "Party",
+      "Music",
+      "Literature",
+      "Instrument",
+      "Art",
+      "Religion",
+      "Extrovert"
+    ];
+
+   // Load selected interests from localStorage on page load
+   function loadSelectedInterests() {
+    const selectedInterests = JSON.parse(localStorage.getItem('selectedInterests')) || [];
+
+    interests.forEach((interest, index) => {
+      const element = document.createElement("div");
+      element.textContent = interest;
+      element.classList.add("custom-class");
+
+      // Check if the interest is selected and add selected class
+      if (selectedInterests.includes(interest)) {
+        element.classList.add('selected');
+      }
+
+      // Add click event listener to each interesta
+      element.addEventListener('click', () => {
+        toggleSelection(element, interest);
+      });
+
+      interestContainer.appendChild(element);
+    });
+
+    updateCongratulationsBtn(selectedInterests.length);
+  }
+
+  // Toggle selection for an interest
+  function toggleSelection(element, interest) {
+    const selectedInterests = JSON.parse(localStorage.getItem('selectedInterests')) || [];
+
+    // Check if the interest is already selected
+    const index = selectedInterests.indexOf(interest);
+    if (index !== -1) {
+      // Interest is selected, remove it from the array and unselect
+      selectedInterests.splice(index, 1);
+      element.classList.remove('selected');
+    } else {
+      // Check if the user can select more interests
+      if (selectedInterests.length >= 4) {
+        alert('You can only select up to 4 interests.');
+        return;
+      }
+
+      // Interest is not selected, add it to the array and select
+      selectedInterests.push(interest);
+      element.classList.add('selected');
+    }
+
+    // Update localStorage
+    localStorage.setItem('selectedInterests', JSON.stringify(selectedInterests));
+
+    updateCongratulationsBtn(selectedInterests.length);
+  }
+
+  // Update the Congratulations button based on the number of selected interests
+  function updateCongratulationsBtn(selectedCount) {
+    congratBtn.disabled = selectedCount < 3 || selectedCount > 4;
+  }
+
+  // Show congratulations message
+  function showCongratulations() {
+    const selectedInterests = JSON.parse(localStorage.getItem('selectedInterests')) || [];
+    if (selectedInterests.length >= 2 && selectedInterests.length <= 4) {
+        // Update the form field with the selected interests
+        
+        const form = document.querySelector('form');
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'selected_interests';
+        input.value = JSON.stringify(selectedInterests);
+        form.appendChild(input);
+        form.submit();
+        window.location.href = "{% url 'pairs' %}";
+    } else {
+        alert('Please select 2 to 4 interests before booking a room.');
+    }
+}
+
+  // Call the function to load selected interests on page load
+  loadSelectedInterests();
+
+    </script>
+</body>
+</html>
