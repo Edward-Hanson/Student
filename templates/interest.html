@@ -139,7 +139,7 @@
     <title>Book Room</title>
 </head>
 <body>
-    <form method="POST" action="{% url 'pairs' %}">
+    <form method="POST" action="{% url 'get_interest' %}">
         {% csrf_token %}
         <div class="dashboard_wrapper">
             <div class="sidebar">
@@ -174,7 +174,7 @@
         <div class="interest">
             <h1>Select Your Interests and Personality</h1>
             <div class="interestContainer"></div>
-            <button class="btn" disabled onclick="showCongratulations()">Book Room</button>
+            <button class="btn" disabled onclick="showCongratulations()">Confirm Interest</button>
         </div>
     </div>
 </form>
@@ -272,7 +272,7 @@ const congratBtn = document.querySelector('.btn')
         input.value = JSON.stringify(selectedInterests);
         form.appendChild(input);
         form.submit();
-        window.location.href = "{% url 'pairs' %}";
+        window.location.href = "{% url 'get_interest' %}";
     } else {
         alert('Please select 2 to 4 interests before booking a room.');
     }
