@@ -277,10 +277,11 @@
         <thead>
           <tr>
             <th>Picture</th>
-            <th>{{user.student_name}}</th>
-            <th>{{user.student_programme}}</th>
-            <th>{{user.student_mail}}</th>
-            <th>{% for student in room.students.all()%}</th>
+            <th>Student Name</th>
+            <th>Student Level</th>
+            <th>Student Programme</th>
+            <th>Student Mail</th>
+            <th>{% for student in room.students.all%}</th>
           </tr>
         </thead>
         
@@ -291,6 +292,7 @@
             <td>{{student.student_programme}}</td>
             <td>{{student.student_mail}}</td>
           </tr>
+          {% endfor %}
         </tbody>
       </table>
     </div>

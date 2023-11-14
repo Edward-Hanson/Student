@@ -152,10 +152,12 @@
                         <img src="assets/dashboard.png" alt="">
                         <a href="dashboard.html">DashBoard</a>
                     </li>
+                    {% if not user.room %}
                     <li>
                         <img src="assets/dashboard.png" alt="">
                         <a href="book.html">Book Room</a>
                     </li>
+                    {% endif %}
                     <li>
                         <img src="assets/dashboard.png" alt="">
                         <a href="#">View Room</a>

@@ -175,10 +175,12 @@
                         <img src="{% static 'images/dashboard.jpg'%}" alt="">
                         <a href="#">DashBoard</a>
                     </li>
+                    {% if not user.room%}
                     <li>
                         <img src="{% static 'images/dashboard.jpg'%}" alt="">
                         <a href="{% url 'interests' %}">Book Room</a>
                     </li>
+                    {% endif %}
                     <li>
                         <img src="{% static 'images/dashboard.jpg'%}" alt="">
                         <a href="#">View Room</a>
