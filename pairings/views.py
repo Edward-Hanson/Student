@@ -18,10 +18,8 @@ def get_interest(request):
         my_list = json.loads(selected_interests)
         for item in my_list:
             interest = Student_Interest.objects.create(interest=item,student=user)
-        print("get interest")
         return redirect('pairs')
-    print("get_interest_failed")
-    return redirect("home")
+    return redirect("view_room")
 
 def send_mail(user):
     recipient_email = user.student_mail
@@ -53,7 +51,7 @@ def pairs(request):
                         interests = interests + "|" +item
                     room.room_interest = interests
                     room.save()
-                    # send_mail(user)
+                    send_mail(user)
                     return render(request,'pairs.html',{'room':room,'user':user})
                 else:
                     user_interests= list(user.interests.values_list('interest',flat=True))
@@ -62,13 +60,22 @@ def pairs(request):
                     common_interest= list(set(user_interests).intersection(set(room_interests_refined)))
                     if len(common_interest)>1:
                         room.students.add(user)
-                        if room.students.count()==2:
-                            interest=''
-                            for item in common_interest:
-                                interest = interest + "|" + item
-                            room.room_interest = interest
-                            room.save()
+                        interest=''
+                        for item in common_interest:
+                            interest = interest + "|" + item
+                        room.room_interest = interest
+                        room.save()
+                        send_mail(user)
                         return render(request,'pairs.html',{'room':room,'user':user})
     
                     continue
-    return redirect('home')
+    return redirect('view_room')
+
+@login_required
+def view_room(request):
+    user=request.user
+    room =  user.room
+    interests = room.room_interest.split("|")
+    room_interests= [item for item in interests if item.strip()!=""]
+    return render(request,'view.html',{'room':room,'room_interests':room_interests})
+    

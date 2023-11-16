@@ -242,28 +242,32 @@
           <ul>
             <li>
               <img src="assets/dashboard.png" />
-              <a href="/dashboard">Dashboard</a>
+              <a href="{% url 'home' %}">Dashboard</a>
             </li>
             <li>
               <img src="assets/dashboard.png" />
               Payment
             </li>
+            {% if not user.room%}
             <li>
               <img src="assets/dashboard.png" />
               <a href="/book">Book Room</a>
             </li>
+            {% endif %}
             <li>
               <img src="assets/dashboard.png" />
               Complaints
             </li>
+            {% if user.room%}
             <li>
               <img src="assets/dashboard.png" />
-              <a href="View Room">View Room</a>
+              <a href="{% url 'view_room' %}">View Room</a>
             </li>
+            {% endif %}
 
             <li class=" logOut">
               <img src="assets/dashboard.png" />
-              <a href="logOut">Log Out</a>
+              <a href="{% url 'logout' %}">Log Out</a>
             </li>
           </ul>
         </div>

@@ -158,10 +158,12 @@
                         <a href="book.html">Book Room</a>
                     </li>
                     {% endif %}
+                    {% if user.room%}
                     <li>
                         <img src="assets/dashboard.png" alt="">
-                        <a href="#">View Room</a>
+                        <a href="{% url 'view_room' %}">View Room</a>
                     </li>
+                    {% endif %}
                     <li>
                         <img src="assets/dashboard.png" alt="">
                         <a href="#">Payment</a>

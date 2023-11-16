@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./dashboard.css">
+    <link rel="stylesheet" href="./viewRoom.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .dashboardContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .table-container,
+        .my-table {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .custom-table,
+        .my-table {
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .custom-table th,
+        .custom-table td,
+        .my-table th,
+        .my-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .custom-table th,
+        .my-table th {
+            background-color: #4CAF50;
+            color: white;
+            text-align: left;
+            padding: 15px;
+            font-size: 18px;
+        }
+
+        .custom-table tbody tr:nth-child(odd),
+        .my-table td {
+            background-color: #f2f2f2; /* Background color for interests */
+        }
+
+        .custom-table tbody tr:hover,
+        .my-table tbody tr:hover {
+            background-color: #e0e0e0;
+        }
+
+        .custom-table tbody td.image img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #40e9cb;
+        }
+
+        .my-table h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .view {
+            border-radius: 8px;
+            background-color: #40e9cb;
+            padding: 12px 24px;
+            border: none;
+            font-size: 16px;
+            color: white;
+        }
+
+        .buttons {
+          display:flex;
+          align-items:center;
+          justify-content:space-between;
+          right:center;
+        }
+
+        .buttons a {
+          color:inherit;
+          text-decoration:none;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div class="dashboardContainer">
+        <div class="contianerLeft">
+          <div class= 'buttons'>
+            <button class="view">Room Name: {{room.room_name}}</button>
+            <button class="view"><a href="{% url 'home'%}">Home</a></button>
+          </div>
+            
+            <div class="table-container">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Picture</th>
+                            <th>Student Name</th>
+                            <th>Student Level</th>
+                            <th>Student Programme</th>
+                            <th>Student Mail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in room.students.all %}
+                        <tr>
+                            <td class="image"><img src="assets/profile.jpg" alt="Profile 1"></td>
+                            <td>{{ student.student_name }}</td>
+                            <td>{{ student.student_level }}</td>
+                            <td>{{ student.student_programme }}</td>
+                            <td>{{ student.student_mail }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="contianerLeft">
+            <table class="my-table">
+                <thead>
+                    <tr>
+                        <th colspan="2">
+                            <h1>{{ room.room_name }} Interests</h1>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for interest in room_interests %}
+                    <tr>
+                        <td>{{ interest }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

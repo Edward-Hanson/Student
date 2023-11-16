@@ -152,6 +152,33 @@
 .dashboardHeadingTop span {
     font-weight:500;
 }
+
+.my-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.my-table th {
+    background-color: #4CAF50;
+    color: white;
+    text-align: left;
+    padding: 15px;
+    font-size: 18px;
+}
+
+.my-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    font-size: 16px;
+}
+
+
+.my-table h1 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
 </style>
 {% load static %}
 <!DOCTYPE html>
@@ -181,10 +208,12 @@
                         <a href="{% url 'interests' %}">Book Room</a>
                     </li>
                     {% endif %}
+                    {% if user.room%}
                     <li>
                         <img src="{% static 'images/dashboard.jpg'%}" alt="">
-                        <a href="#">View Room</a>
+                        <a href="{% url 'view_room' %}">View Room</a>
                     </li>
+                    {% endif %}
                     <li>
                         <img src="{% static 'images/dashboard.jpg'%}" alt="">
                         <a href="#">Payment</a>
